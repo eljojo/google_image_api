@@ -16,17 +16,17 @@ module GoogleImageApi
   #   puts img['url']
   # end
 
-  def self.Configure(&block)
-    Configuration.instance.instance_eval(&block)
+  def self.configure(&block)
+    yield(Configuration.instance)
   end
 
   def self.find( query, options = {} )
     client.find( query, options )
   end
 
-  Configure {
-    key nil
-  }
+  configure do |config|
+    config.user_agent = "Ruby/#{RUBY_VERSION}"
+  end
 
   private
 

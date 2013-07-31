@@ -12,7 +12,7 @@ module GoogleImageApi
 
     def request( options )
       require 'open-uri'
-      URI.parse( url_for( options ) ).read( "User-Agent" => "Ruby/#{RUBY_VERSION}" )
+      URI.parse( url_for( options ) ).read( "User-Agent" => config_options.user_agent )
     end
 
     def request_image( query, options = {} )
@@ -20,15 +20,12 @@ module GoogleImageApi
     end
 
     protected
-      def configuration_options
-        {
-          :key => Configuration[:key],
-        }
+      def config_options
+        Configuration.instance
       end
 
-      def url_for( options )
+      def url_for( options = {} )
         url = BASE_URL.dup
-        options = configuration_options.delete_if {|key, value| value == nil}.merge( options )
         options.each do |key, val|
           value = urlify_value( val )
           if url.include?( ":#{key}" )
@@ -37,7 +34,6 @@ module GoogleImageApi
             url << "&#{key}=#{value}"
           end
         end
-        puts url
         url
       end
 
