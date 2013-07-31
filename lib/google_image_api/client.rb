@@ -12,7 +12,10 @@ module GoogleImageApi
 
     def request( options )
       require 'open-uri'
-      URI.parse( url_for( options ) ).read( "User-Agent" => config_options.user_agent )
+      URI.parse( url_for( options ) ).read(
+        "User-Agent" => config_options.user_agent,
+        :proxy => config_options.proxies.sample
+      )
     end
 
     def request_image( query, options = {} )

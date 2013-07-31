@@ -25,6 +25,7 @@ module GoogleImageApi
   end
 
   configure do |config|
+    config.proxies = []
     config.user_agent = "Ruby/#{RUBY_VERSION}"
   end
 
