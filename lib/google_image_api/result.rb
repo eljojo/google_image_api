@@ -11,6 +11,7 @@ module GoogleImageApi
     end
 
     def images
+      return [] unless @data["responseData"] and @data["responseData"]["results"]
       @data["responseData"]["results"]
     end
 
